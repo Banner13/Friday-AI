@@ -1,0 +1,15 @@
+services:    
+  ollama:
+    image: docker.io/ollama/ollama:latest
+    runtime: nvidia
+    shm_size: 8g
+    volumes:
+      - ollama:/root/.ollama
+    container_name: ollama
+    tty: true
+    restart: unless-stopped
+    network_mode: "host"
+
+volumes:
+  ollama:
+
