@@ -2,7 +2,7 @@ services:
   ollama:
     image: docker.io/ollama/ollama:latest
     runtime: nvidia
-    shm_size: 8g
+    shm_size: 16g
     volumes:
       - ollama:/root/.ollama
     container_name: ollama
