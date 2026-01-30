@@ -1,8 +1,0 @@
-curl -fsSL https://tailscale.com/install.sh | sh
-forticlient
-docker
-del default
-disable ipv6
-ssh-keygen
-git 
-gpu docker https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
