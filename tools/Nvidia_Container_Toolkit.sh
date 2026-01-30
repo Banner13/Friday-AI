@@ -31,7 +31,7 @@ if [ -f /etc/docker/daemon.json ]; then
     # check daemon file
     cat /etc/docker/daemon.json
     # check nvidia runtime
-    # docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+    # docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
 
 fi
 
