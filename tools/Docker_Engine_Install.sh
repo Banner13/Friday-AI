@@ -3,6 +3,12 @@
 
 set -e
 
+# check user is't root
+if [ "$EUID" -eq 0 ]; then
+    echo "Please do not run as root."
+    exit 1
+fi
+
 # check os is ubuntu
 if [ -f /etc/os-release ]; then
     . /etc/os-release
@@ -40,7 +46,9 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 # Optionally, manage Docker as a non-root user:
 sudo groupadd docker || true
 
+# fix error when running in sudo 
 sudo usermod -aG docker $USER || true
+
 
 # modify default configuration file
 # refer to https://docs.docker.com/engine/daemon/
