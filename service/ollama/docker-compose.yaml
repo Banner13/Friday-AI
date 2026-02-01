@@ -1,7 +1,9 @@
 services:    
   ollama:
     image: docker.io/ollama/ollama:latest
-    runtime: nvidia
+    runtime: amd
+    environment:
+      - AMD_VISIBLE_DEVICES=all
     shm_size: 16g
     volumes:
       - ollama:/root/.ollama
