@@ -1,0 +1,19 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    environment:
+    - OLLAMA_BASE_URL=http://ollama-amd:11434
+    volumes:
+    - open-webui:/app/backend/data
+    networks:
+      - share-net-ollama
+    ports:
+      - "8080:8080"
+
+volumes:
+  open-webui:
+
+networks:
+  share-net-ollama:
+    external: true
