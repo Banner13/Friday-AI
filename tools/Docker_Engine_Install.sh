@@ -60,7 +60,8 @@ sudo mkdir -p /data/docker
 sudo cp /etc/docker/daemon.json /etc/docker/daemon.json.bak || true
 sudo tee /etc/docker/daemon.json <<EOF
 {
-  "data-root": "/data/docker-data"
+  "data-root": "/data/docker-data",
+  "ipv6": false
 }
 EOF
 

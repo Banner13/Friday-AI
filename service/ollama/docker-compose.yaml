@@ -1,12 +1,18 @@
 services:    
   ollama:
-    image: docker.io/ollama/ollama:latest
+    # image: docker.io/ollama/ollama:latest
+
+    # amd gpu
+    build:
+      context: .
+      dockerfile: dockerfile.amd
+
     runtime: amd
     environment:
       - AMD_VISIBLE_DEVICES=all
     shm_size: 16g
     volumes:
-      - ollama:/root/.ollama
+      - /data/ollama:/root/.ollama
     container_name: ollama
     tty: true
     restart: unless-stopped

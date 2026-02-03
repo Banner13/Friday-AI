@@ -1,8 +1,0 @@
-services:
-  test:
-    image: rocm/dev-ubuntu-24.04
-    container_name: amd_gpu_test
-    command: amd-smi monitor
-    runtime: amd
-    environment:
-      - AMD_VISIBLE_DEVICES=all

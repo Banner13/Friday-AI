@@ -1,4 +1,5 @@
 #!/bin/bash
+# from https://rocm.docs.amd.com/projects/install-on-linux/en/docs-7.2.0/index.html
 # from https://instinct.docs.amd.com/projects/container-toolkit/en/latest/container-runtime/quick-start-guide.html
 
 set -e

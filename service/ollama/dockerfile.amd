@@ -1,0 +1,14 @@
+# Stage 1: import amd-gpu dev env
+FROM rocm/dev-ubuntu-24.04 AS ollama-builder
+
+RUN mv /etc/apt/sources.list.d /etc/apt/sources.list.d.bak
+RUN mkdir -p /etc/apt/sources.list.d
+RUN cp /etc/apt/sources.list.d.bak/ubuntu.sources /etc/apt/sources.list.d/
+
+RUN apt-get update
+
+RUN apt-get install zstd -y
+
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
+CMD ["/usr/local/bin/ollama", "serve"]
