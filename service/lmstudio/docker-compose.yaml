@@ -19,7 +19,7 @@ services:
 
     shm_size: 16g
     volumes:
-      - /data/volumes-data/llmster:/root/.lmstudio
+      - /data/volumes-data/llmster/root/.lmstudio:/root/.lmstudio
     tty: true
     restart: unless-stopped
 
