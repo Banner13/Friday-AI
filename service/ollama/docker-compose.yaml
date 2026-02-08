@@ -20,7 +20,7 @@ services:
 
     shm_size: 16g
     volumes:
-      - /data/ollama:/root/.ollama
+      - /data/volumes-data/ollama:/root/.ollama
     container_name: ollama-amd
 
     tty: true

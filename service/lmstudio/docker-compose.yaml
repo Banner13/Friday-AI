@@ -1,0 +1,33 @@
+networks:
+  share-net-lms:
+    name: share-net-lms
+    attachable: true
+
+services:    
+  llmster:
+    container_name: llmster-amd
+
+    # image: rocm/dev-ubuntu-24.04
+    build:
+      context: .
+      dockerfile: dockerfile.amd
+
+    # amd gpu
+    runtime: amd
+    environment:
+      - AMD_VISIBLE_DEVICES=all
+
+    shm_size: 16g
+    volumes:
+      - /data/volumes-data/llmster:/root/.lmstudio
+    tty: true
+    restart: unless-stopped
+
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    networks:
+      - share-net-lms
+
+volumes:
+  llmster:

@@ -1,0 +1,18 @@
+# Stage 1: import amd-gpu dev env
+FROM rocm/dev-ubuntu-24.04 AS llmster-builder
+
+RUN mv /etc/apt/sources.list.d /etc/apt/sources.list.d.bak
+RUN mkdir -p /etc/apt/sources.list.d
+RUN cp /etc/apt/sources.list.d.bak/ubuntu.sources /etc/apt/sources.list.d/
+
+RUN apt-get update
+
+# RUN curl -fsSL https://lmstudio.ai/install.sh | bash
+
+COPY entrypoint.sh /root/entrypoint.sh
+RUN chmod +x /root/entrypoint.sh
+
+ENV PATH="/root/.lmstudio/bin:$PATH"
+
+ENTRYPOINT ["/root/entrypoint.sh"]
+CMD ["bash"]
