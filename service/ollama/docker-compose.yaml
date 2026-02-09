@@ -16,7 +16,7 @@ services:
       - AMD_VISIBLE_DEVICES=all
     build:
       context: .
-      dockerfile: dockerfile.amd
+      dockerfile: dockerfile.vulkan
 
     shm_size: 16g
     volumes:
