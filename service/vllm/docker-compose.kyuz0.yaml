@@ -1,0 +1,25 @@
+services:    
+  vllm:
+    image: kyuz0/vllm-therock-gfx1151:latest
+
+    # amd gpu
+    runtime: amd
+    environment:
+      - AMD_VISIBLE_DEVICES=all
+
+    shm_size: 16g
+    volumes:
+      - /data/volumes-data/models/huggingface:/root/.cache/huggingface
+    container_name: vllm-kyuz0
+
+    tty: true
+    restart: unless-stopped
+
+    network_mode: "host"
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+volumes:
+  vllm:
+
