@@ -3,17 +3,13 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     environment:
-    - OLLAMA_BASE_URL=http://ollama-amd:11434
+    #- OLLAMA_BASE_URL=http://ollama-amd:11434
+      - OPENAI_API_BASE_URL=http://192.168.2.113:8000/v1
     volumes:
-    - open-webui:/app/backend/data
-    networks:
-      - share-net-ollama
+      - open-webui:/app/backend/data
     ports:
       - "8080:8080"
 
 volumes:
   open-webui:
 
-networks:
-  share-net-ollama:
-    external: true
