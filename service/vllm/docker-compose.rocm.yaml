@@ -3,21 +3,19 @@ networks:
     name: share-net-vllm
     attachable: true
 
-
 services:    
   vllm:
     container_name: vllm-amd
-    image: rocm/vllm:v0.14.0_amd_dev
+    image: rocm/vllm-dev:preview_releases_rocm_v0.16.0_20260212
 
     # amd gpu
     runtime: amd
     environment:
       - AMD_VISIBLE_DEVICES=all
-      - VLLM_USE_MODELSCOPE=True
 
     shm_size: 16g
     volumes:
-      - /data/volumes-data/vllm/root/.cache:/root/.cache
+      - /data/volumes-data/models/huggingface:/root/.cache/huggingface
 
     tty: true
     restart: unless-stopped

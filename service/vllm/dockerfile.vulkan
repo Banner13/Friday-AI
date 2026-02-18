@@ -1,0 +1,24 @@
+# 基础镜像与工具安装
+FROM ubuntu:25.10
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && \
+    apt-get full-upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    ca-certificates \
+    git \
+    curl \
+    wget \
+    vim \
+    gcc \
+    g++ \
+    make \
+    libsqlite3-dev \
+    google-perftools \
+    libtbb-dev \
+    libnuma-dev \
+    numactl
+
+# 默认启动命令
+CMD ["/bin/bash"]
+
