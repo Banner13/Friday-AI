@@ -3,12 +3,10 @@ networks:
     name: share-net-ollama
     attachable: true
 
-
 services:    
   ollama:
+    container_name: ollama-vulkan
     # image: docker.io/ollama/ollama:latest
-
-
     # amd gpu
     runtime: amd
     environment:
@@ -20,8 +18,7 @@ services:
 
     shm_size: 16g
     volumes:
-      - /data/volumes-data/ollama/root/.ollama:/root/.ollama
-    container_name: ollama-amd
+      - /data/volumes-data/models/ollama:/root/.ollama/models
 
     tty: true
     restart: unless-stopped
