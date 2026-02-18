@@ -1,0 +1,25 @@
+services:    
+  llama-cpp:
+    container_name: llama-cpp-kyuz0-radv
+    image: kyuz0/amd-strix-halo-toolboxes:vulkan-radv
+
+    # amd gpu
+    runtime: amd
+    environment:
+      - AMD_VISIBLE_DEVICES=all
+
+    shm_size: 16g
+    volumes:
+      - /data/volumes-data/models/llama.cpp:/root/.cache/llama.cpp
+
+    tty: true
+    restart: unless-stopped
+
+    network_mode: "host"
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+volumes:
+  llama-cpp:
+
