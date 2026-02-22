@@ -6,10 +6,11 @@ RUN mkdir -p /etc/apt/sources.list.d
 RUN cp /etc/apt/sources.list.d.bak/ubuntu.sources /etc/apt/sources.list.d/
 
 RUN apt-get update
+RUN apt-get install libvulkan1 vulkan-tools -y
 
 RUN apt-get install zstd curl pciutils -y
 
+
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
-ENV OLLAMA_VULKAN=1
 CMD ["/usr/local/bin/ollama", "serve"]

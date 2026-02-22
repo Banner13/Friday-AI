@@ -1,21 +1,19 @@
-networks:
-  share-net-ollama:
-    name: share-net-ollama
-    attachable: true
-
 services:    
   ollama:
-    container_name: ollama-vulkan
-    # image: docker.io/ollama/ollama:latest
-    # amd gpu
-    runtime: amd
-    environment:
-      - OLLAMA_HOST=0.0.0.0:11434
-      - AMD_VISIBLE_DEVICES=all
+    container_name: ollama
+
+    #runtime: amd
     build:
       context: .
       dockerfile: dockerfile.vulkan
 
+    environment:
+     # - AMD_VISIBLE_DEVICES=all
+      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_VULKAN=1
+
+    devices:
+      - /dev/dri:/dev/dri
     shm_size: 16g
     volumes:
       - /data/volumes-data/models/ollama:/root/.ollama/models
@@ -24,12 +22,17 @@ services:
     restart: unless-stopped
 
     # network_mode: "host"
+    networks:
+      - share-net
     dns:
       - 1.1.1.1
       - 8.8.8.8
-    networks:
-      - share-net-ollama
 
 volumes:
   ollama:
+
+networks:
+  share-net:
+    name: share-net
+    external: true
 
