@@ -1,11 +1,6 @@
-networks:
-  share-net-vllm:
-    name: share-net-vllm
-    attachable: true
-
 services:    
   vllm:
-    container_name: vllm-amd
+    container_name: vllm
     image: rocm/vllm-dev:preview_releases_rocm_v0.16.0_20260212
 
     # amd gpu
@@ -13,18 +8,24 @@ services:
     environment:
       - AMD_VISIBLE_DEVICES=all
 
-    shm_size: 16g
+    shm_size: 8g
     volumes:
       - /data/volumes-data/models/huggingface:/root/.cache/huggingface
 
     tty: true
     restart: unless-stopped
 
+    networks:
+      - share-net
     dns:
       - 1.1.1.1
       - 8.8.8.8
-    networks:
-      - share-net-vllm
 
 volumes:
-  vllm:
+  vllam:
+
+networks:
+  share-net:
+    name: share-net
+    external: true
+
