@@ -1,3 +1,6 @@
+include:
+  - ../../compose-include.yaml
+
 services:    
   ollama:
     container_name: ollama
@@ -9,7 +12,7 @@ services:
 
     environment:
      # - AMD_VISIBLE_DEVICES=all
-      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_HOST=0.0.0.0:${OLLAMA_PORT}
       - OLLAMA_VULKAN=1
 
     devices:
@@ -23,16 +26,10 @@ services:
 
     # network_mode: "host"
     networks:
-      - share-net
+      - ${SHARED_NETWORK}
     dns:
       - 1.1.1.1
       - 8.8.8.8
 
 volumes:
   ollama:
-
-networks:
-  share-net:
-    name: share-net
-    external: true
-

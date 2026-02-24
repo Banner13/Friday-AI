@@ -1,0 +1,6 @@
+# docker container network
+networks:
+  share-net:
+    name: ${SHARED_NETWORK}
+    external: true
+
