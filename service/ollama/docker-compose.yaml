@@ -19,7 +19,7 @@ services:
       - /dev/dri:/dev/dri
     shm_size: 16g
     volumes:
-      - /data/volumes-data/models/ollama:/root/.ollama/models
+      - ${ROOT_DATA}/models/ollama:/root/.ollama/models
 
     tty: true
     restart: unless-stopped
