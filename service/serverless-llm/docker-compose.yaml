@@ -1,0 +1,63 @@
+include:
+  - ../../compose-include.yaml
+
+services:    
+  sllm-head:
+    container_name: ${SLLM_HEAD_NAME}
+
+    image: hihuke/serverless-llm:latest
+
+    env_file:
+      - .env
+      - .env.ray
+
+    environment:
+      - MODE=HEAD
+
+    shm_size: 16g
+    volumes:
+      - ${SLLM_V_MODELS}:${SLLM_MODEL_FOLDER}
+
+    tty: true
+    restart: unless-stopped
+
+    # network_mode: "host"
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    ports:
+      - "6379:6379"    # Redis port
+      - "8343:8343"    # ServerlessLLM port
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+
+  sllm-worker:
+    container_name: ${SLLM_WORKER_NAME}
+
+    runtime: amd
+    image: hihuke/serverless-llm:latest
+
+    env_file:
+      - .env
+      - .env.ray
+
+    environment:
+      - AMD_VISIBLE_DEVICES=all
+      - MODE=WORKER
+
+    shm_size: 16g
+    volumes:
+      - ${SLLM_V_MODELS}:${SLLM_MODEL_FOLDER}
+
+    tty: true
+    restart: unless-stopped
+
+    # network_mode: "host"
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+volumes:
+  sllm_head:

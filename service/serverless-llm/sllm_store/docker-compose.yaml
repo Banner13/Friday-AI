@@ -1,0 +1,29 @@
+include:
+  - ../../compose-include.yaml
+
+services:    
+  sllm-store:
+    container_name: ${SLLM_STORE_NAME?sllm-store name is null!}
+
+    runtime: amd
+    image: hihuke/sllm_store:latest
+
+    environment:
+      - AMD_VISIBLE_DEVICES=all
+
+    shm_size: 16g
+    volumes:
+      - ${SLLM_V_MODELS}:${SLLM_MODEL_FOLDER}
+
+    tty: true
+    restart: unless-stopped
+
+    # network_mode: "host"
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+volumes:
+  sllm_store:
