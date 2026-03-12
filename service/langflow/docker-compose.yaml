@@ -1,0 +1,25 @@
+include:
+  - ../../compose-include.yaml
+
+services:
+  langflow:
+    container_name: ${LFLOW_NAME?langflow name not set!}
+
+    # image: langflowai/langflow:latest
+    build:
+      context: .
+      dockerfile: dockerfile
+
+    environment:
+      - LANGFLOW_HOST=0.0.0.0
+      - LANGFLOW_PORT=${LFLOW_PORT}
+    volumes:
+            #- ${APP_DATA?volumes issue.}/tmp:/app/backend/data
+      - /tmp:/tmp
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    ports:
+      - "${LFLOW_HOST_PORT?port issue.}:${LFLOW_PORT:-7860}"
+
+volumes:
+  langflow:

@@ -1,0 +1,12 @@
+# 基础镜像与工具安装
+FROM langflowai/langflow:latest
+
+USER root
+RUN pip install langflow[docling]
+USER user
+
+EXPOSE 7860
+
+# 默认启动命令
+# CMD ["/bin/bash"]
+
