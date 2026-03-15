@@ -35,16 +35,30 @@ CREATE TEMP TABLE protected_roles (
 );
 
 INSERT INTO protected_roles (role_name)
-VALUES
-  ('jack');
+
+SELECT DISTINCT role_name
+FROM (
+  VALUES
+    ('jack'),
+    (CURRENT_USER),
+    (SESSION_USER)
+) AS protected_role_values(role_name)
+WHERE role_name IS NOT NULL
+  AND role_name <> '';
 
 CREATE TEMP TABLE protected_databases (
   database_name text PRIMARY KEY
 );
 
 INSERT INTO protected_databases (database_name)
-VALUES
-  ('db_default');
+SELECT DISTINCT database_name
+FROM (
+  VALUES
+    ('db_default'),
+    (current_database())
+) AS protected_database_values(database_name)
+WHERE database_name IS NOT NULL
+  AND database_name <> '';
 
 -- ============================================================================
 -- APPLY
@@ -129,10 +143,9 @@ ORDER BY pg_database.datname
 \gexec
 
 SELECT format(
-  'REASSIGN OWNED BY %I TO postgres; DROP OWNED BY %I; DROP ROLE %I',
+  'REASSIGN OWNED BY %1$I TO %2$I; DROP OWNED BY %1$I; DROP ROLE %1$I',
   pg_roles.rolname,
-  pg_roles.rolname,
-  pg_roles.rolname
+  CURRENT_USER
 )
 FROM pg_roles
 WHERE pg_roles.rolname !~ '^pg_'
