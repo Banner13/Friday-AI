@@ -1,0 +1,49 @@
+include:
+  - ../../compose-include.yaml
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: ${PGRES_NAME}
+    restart: always
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ${PGRES_DATA}:${PGDATA}
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    ports:
+      - ${PGRES_HOST_PORT}:${PGRES_PORT}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  postgres-init:
+    image: postgres:16
+    container_name: postgres-init
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - PGHOST=postgres
+      - PGPORT=${PGRES_PORT}
+
+      # PGDATABASE: postgres
+    networks:
+      - ${SHARED_NETWORK?net issue.}
+    volumes:
+      - ./init:/init:ro
+      - ./bootstrap/apply-init.sh:/apply-init.sh:ro
+    entrypoint: ["/bin/bash", "/apply-init.sh"]
+
+volumes:
+  postgres_data:
